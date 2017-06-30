@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ForAlfa</string>
+    <string name="rss_url">https://lenta.ru/rss/news</string>
+
 </resources>
