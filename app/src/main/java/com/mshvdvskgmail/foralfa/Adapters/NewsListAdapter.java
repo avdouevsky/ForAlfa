@@ -13,7 +13,11 @@ import com.mshvdvskgmail.foralfa.R;
 import com.mshvdvskgmail.foralfa.activities.WebActivity;
 import com.prof.rssparser.Article;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by mshvdvsk on 28/06/2017.
@@ -24,14 +28,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     private List<Article> articleList;
     private Context context;
 
-//    public interface OnItemClickListener {
-//        public void onItemClicked(int position);
-//    }
-//
-//    public interface OnItemLongClickListener {
-//        public boolean onItemLongClicked(int position);
-//    }
-
     public NewsListAdapter(Context context, List<Article> articleList){
         this.articleList = articleList;
         this.context = context;
@@ -40,6 +36,10 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void updateData(List<Article> articleList){
         this.articleList = articleList;
         notifyDataSetChanged();
+    }
+
+    public List<Article> getList(){
+        return articleList;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.title.setText(articleList.get(position).getTitle());
         holder.description.setText(articleList.get(position).getDescription());
-        holder.pubDate.setText(articleList.get(position).getPubDate().toString());
+        holder.pubDate.setText(getReadableDate(articleList.get(position).getPubDate()));
         holder.mainView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
                 intent.putExtra(Intent.EXTRA_TEXT, articleList.get(position).getLink());
                 Intent new_intent = Intent.createChooser(intent, "Share via");
                 new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(new_intent);
                 return true;
             }
@@ -85,7 +84,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView title;
         TextView description;
         TextView pubDate;
@@ -99,4 +97,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         }
     }
 
+    public String getReadableDate(Date date) {
+        DateFormat sdf = new SimpleDateFormat("EEEE, kk:mm", Locale.getDefault());
+        return sdf.format(date);
+    }
 }

@@ -1,34 +1,26 @@
 package com.mshvdvskgmail.foralfa.activities;
 
 import android.annotation.TargetApi;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-
 import com.mshvdvskgmail.foralfa.adapters.NewsListAdapter;
 import com.mshvdvskgmail.foralfa.MyApplication;
 import com.mshvdvskgmail.foralfa.R;
 import com.mshvdvskgmail.foralfa.service.NotificationService;
 import com.prof.rssparser.Article;
 import com.prof.rssparser.Parser;
-
 import java.util.ArrayList;
 import java.util.List;
-// 6093747 vk id
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvNewsList;
     private NewsListAdapter nlAdaper;
     private JobScheduler jobScheduler;
+    private SwipeRefreshLayout sTRL;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -76,28 +69,21 @@ public class MainActivity extends AppCompatActivity {
             public void onError() {}
         });
 
-        TextView tvRefreshButton = (TextView) findViewById(R.id.refresh_button);
-        tvRefreshButton.setOnClickListener(new View.OnClickListener() {
+        sTRL = (SwipeRefreshLayout) findViewById(R.id.swipe_to_refresh);
+        sTRL.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                Parser updateParser = new Parser();
-                updateParser.execute(urlString);
-                updateParser.onFinish(new Parser.OnTaskCompleted() {
-                    @Override
-                    public void onTaskCompleted(ArrayList<Article> list) {
-                        List<Article> savedList = ((MyApplication)getApplication()).getArticleList();
-
-                        if (!savedList.get(0).equals(list.get(0))){
-                            ((MyApplication)getApplication()).setArticleList(list);
-                            nlAdaper.updateData(list);
-                            Log.d("lol", "different");
-                        }
-                    }
-                    @Override
-                    public void onError() {}
-                });
+            public void onRefresh() {
+                refreshItems();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (nlAdaper!=null&&!nlAdaper.getList().get(0).equals(((MyApplication)getApplication()).getArticleList().get(0))){
+            nlAdaper.updateData(((MyApplication)getApplication()).getArticleList());
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -106,4 +92,25 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         jobScheduler.cancelAll();
     }
+
+    private void refreshItems(){
+        Parser updateParser = new Parser();
+        updateParser.execute(urlString);
+        updateParser.onFinish(new Parser.OnTaskCompleted() {
+            @Override
+            public void onTaskCompleted(ArrayList<Article> list) {
+                List<Article> savedList = ((MyApplication)getApplication()).getArticleList();
+
+                if (!savedList.get(0).equals(list.get(0))){
+                    ((MyApplication)getApplication()).setArticleList(list);
+                    nlAdaper.updateData(list);
+                    Log.d("lol", "different");
+                }
+            }
+            @Override
+            public void onError() {}
+        });
+        sTRL.setRefreshing(false);
+    }
+
 }
