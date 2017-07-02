@@ -2,6 +2,7 @@ package com.mshvdvskgmail.foralfa;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.prof.rssparser.Article;
 
@@ -13,7 +14,6 @@ import java.util.List;
 
 public class MyApplication extends Application {
     private List <Article> articleList;
-    private static Context context;
 
     public List<Article> getArticleList() {
         return articleList;
@@ -22,11 +22,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        context = this;
-    }
-
-    public static Context getContext(){
-        return context;
     }
 
     public void setArticleList(List<Article> articleList) {

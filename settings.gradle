@@ -1,1 +1,1 @@
-include ':app', ':facebook', ':instagram', ':odnoklassniki', ':ASNECore', ':twitter', ':linkedin', ':vk'
+include ':app'

@@ -16,15 +16,32 @@ import com.mshvdvskgmail.foralfa.R;
  */
 
 public class WebActivity extends AppCompatActivity {
+
+    private WebView webview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_activity);
 
-        WebView webview = (WebView) findViewById(R.id.web_view);
+        webview = (WebView) findViewById(R.id.web_view);
         webview.setWebViewClient(new WebViewClient());
         webview.loadUrl(getIntent().getStringExtra("link"));
+        setClickListeners();
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setContentView(R.layout.web_activity);
+
+        webview = (WebView) findViewById(R.id.web_view);
+        webview.setWebViewClient(new WebViewClient());
+        webview.loadUrl(intent.getStringExtra("link"));
+        setClickListeners();
+    }
+
+    private void setClickListeners(){
         FrameLayout flBack = (FrameLayout) findViewById(R.id.fl_back);
         flBack.setOnClickListener(new View.OnClickListener() {
             @Override

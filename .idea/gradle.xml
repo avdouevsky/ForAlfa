@@ -8,14 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ASNECore" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/facebook" />
-            <option value="$PROJECT_DIR$/instagram" />
-            <option value="$PROJECT_DIR$/linkedin" />
-            <option value="$PROJECT_DIR$/odnoklassniki" />
-            <option value="$PROJECT_DIR$/twitter" />
-            <option value="$PROJECT_DIR$/vk" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

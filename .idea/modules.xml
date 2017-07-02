@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ASNECore/ASNECore.iml" filepath="$PROJECT_DIR$/ASNECore/ASNECore.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ForAlfa.iml" filepath="$PROJECT_DIR$/ForAlfa.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/instagram/instagram.iml" filepath="$PROJECT_DIR$/instagram/instagram.iml" />
-      <module fileurl="file://$PROJECT_DIR$/linkedin/linkedin.iml" filepath="$PROJECT_DIR$/linkedin/linkedin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/odnoklassniki/odnoklassniki.iml" filepath="$PROJECT_DIR$/odnoklassniki/odnoklassniki.iml" />
-      <module fileurl="file://$PROJECT_DIR$/twitter/twitter.iml" filepath="$PROJECT_DIR$/twitter/twitter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vk/vk.iml" filepath="$PROJECT_DIR$/vk/vk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/forAlfa.iml" filepath="$PROJECT_DIR$/forAlfa.iml" />
     </modules>
   </component>
 </project>
